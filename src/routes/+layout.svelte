@@ -20,7 +20,8 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class="m-auto w-full p-2 lg:w-1/2">
+<!-- <div class="m-auto w-full p-2 md:w-1/3"> -->
+<div class="m-auto w-[400px] py-2">
 	<nav class="flex justify-between">
 		<div class="h-10">
 			<img class="h-full" src={logo} alt="Logo" />
@@ -30,7 +31,7 @@
 			<li>
 				<!-- TODO should have some kind a list, to loop this, so it is not repeated -->
 				<div class={['px-2 py-1 text-sm', { 'bg-stone-800 text-white': isAllEvents }]}>
-					<a href="/">SVI DOGAĐAJI</a>
+					<a href="/">DOGAĐAJI</a>
 				</div>
 			</li>
 

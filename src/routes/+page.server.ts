@@ -7,7 +7,8 @@ import dayjs from 'dayjs';
 // import utc from 'dayjs/plugin/utc';
 
 // this is entity type
-type EventEntity = {
+// TODO these types need to be moved to some layers, for clean arch
+export type EventEntity = {
 	id: number;
 	title: string;
 	date: number;
@@ -53,6 +54,7 @@ export async function load() {
 
 	const eventEntities = data.data.events as EventEntity[];
 
+	// TODO create converters
 	const eventModels = eventEntities.map((e) => {
 		const fullDate = dayjs(e.date, 'Europe/Zagreb');
 		// const fullDate = dayjs(e.date);

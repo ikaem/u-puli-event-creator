@@ -4,7 +4,9 @@
 	import PageTitle from '$lib/components/page_title.component.svelte';
 	import type { EventModel } from './+page.server';
 
-	const { data }: { data: { events: EventModel[] } } = $props();
+	// const { data }: { data: { events: EventModel[] } } = $props();
+
+	const { data } = $props();
 
 	let eventForDelete = $state<EventModel | undefined>();
 </script>
@@ -24,4 +26,4 @@
 	onClose={() => (eventForDelete = undefined)}
 />
 <PageTitle title="SVI DOGAĐAJI" colorClass="border-l-amber-400" />
-<EventBriefs events={data.events} onToggleDeleteModal={(event) => (eventForDelete = event)} />
+<EventBriefs events={data.events || []} onToggleDeleteModal={(event) => (eventForDelete = event)} />

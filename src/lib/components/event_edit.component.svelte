@@ -1,20 +1,57 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 
+	// TODO this needs to be moved to domain or utils/values or something
+
+	export type EventEditValue = {
+		title?: string;
+		location?: string;
+		// date: Date;
+		date?: string;
+		time?: string;
+		moreInfoUrl?: string;
+		imageUrl?: string;
+		description?: string;
+	};
+
 	type Props = {
+		editValue: EventEditValue;
 		submitButtonText: string;
 		submitAction: string;
 		submitMethod: 'dialog' | 'get' | 'post' | 'DIALOG' | 'GET' | 'POST' | null | undefined;
 	};
-	const { submitButtonText, submitAction, submitMethod }: Props = $props();
+	const { editValue, submitButtonText, submitAction, submitMethod }: Props = $props();
+
+	// const dateISOString = editValue?.date.toISOString();
+
+	// const dateSegment = dateISOString?.split('T')[0];
+	// const timeSegment = dateISOString?.split('T')[1].split('.')[0];
+
+	// console.log({
+	// 	date: dateSegment,
+	// 	time: timeSegment,
+	// 	isoString: dateISOString
+	// });
 </script>
 
 <div class="bg-green-100 p-2">
+	<!-- use:enhance={() => {
+			return async ({ update }) => {
+				await update();
+			};
+		}} -->
 	<form
 		action={submitAction}
 		method={submitMethod}
 		class="flex flex-col items-stretch gap-4"
-		use:enhance
+		use:enhance={() => {
+			return async ({ update }) => {
+				await update({
+					// ok, so reset false is the key
+					reset: false
+				});
+			};
+		}}
 	>
 		<label class="flex flex-col gap-1">
 			<span class="text-sm">Naziv</span>
@@ -22,14 +59,18 @@
 				class="border-0 outline-none focus:ring-0 focus:outline-none"
 				type="text"
 				name="title"
+				value={editValue?.title}
 			/>
+			<!-- value={editValue?.title} -->
 		</label>
 		<label class="flex flex-col gap-1">
 			<span class="text-sm">Lokacija</span>
+			<!-- TODO maybe form.location should be used? -->
 			<input
 				class="border-0 outline-none focus:ring-0 focus:outline-none"
 				type="text"
 				name="location"
+				value={editValue?.location}
 			/>
 		</label>
 
@@ -40,6 +81,7 @@
 					class="border-0 outline-none focus:ring-0 focus:outline-none"
 					type="date"
 					name="date"
+					value={editValue?.date}
 				/>
 			</label>
 			<label class="flex flex-1 flex-col gap-1">
@@ -48,6 +90,7 @@
 					class="border-0 outline-none focus:ring-0 focus:outline-none"
 					type="time"
 					name="time"
+					value={editValue?.time}
 				/>
 			</label>
 		</div>
@@ -60,34 +103,38 @@
 				class="border-0 outline-none focus:ring-0 focus:outline-none"
 				type="text"
 				name="moreInfoUrl"
+				value={editValue?.moreInfoUrl}
 			/>
 		</label>
 
-		<div class="flex h-20 items-end gap-2">
-			<div class="h-full w-48 bg-amber-500">
-				<img
-					class="h-full w-full object-cover"
-					src="https://images.unsplash.com/photo-1531907933630-126f527982d4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGd1aXRhcnxlbnwwfHwwfHx8MA%3D%3D"
-					alt=""
-				/>
-			</div>
-			<label class="flex flex-1 flex-col gap-1">
+		<div class="flex flex-col gap-2">
+			<label class="flex flex-col gap-1">
 				<span class="text-sm">Url na sliku</span>
 				<input
 					class="border-0 outline-none focus:ring-0 focus:outline-none"
 					type="text"
 					name="imageUrl"
+					value={editValue?.imageUrl}
 				/>
 			</label>
+			<div class="h-30 w-full bg-amber-100">
+				<img
+					class="h-full w-full object-contain object-center"
+					src={editValue?.imageUrl}
+					alt="Slika događaja"
+				/>
+			</div>
 		</div>
 
 		<label class="flex flex-col gap-1">
-			<span class="text-sm">Url na više informacija</span>
+			<span class="text-sm">Opis</span>
 			<!-- <input class="border-0 outline-none focus:ring-0 focus:outline-none" type="text" /> -->
 			<textarea
 				name="description"
 				id=""
 				class="border-0 outline-none focus:ring-0 focus:outline-none"
+				value={editValue?.description}
+				rows="5"
 			></textarea>
 		</label>
 
