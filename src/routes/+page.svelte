@@ -1,8 +1,8 @@
 <script lang="ts">
-	import EventBriefs from '$lib/components/event_briefs.component.svelte';
-	import EventDeleteModal from '$lib/components/event_delete_modal.component.svelte';
 	import PageTitle from '$lib/components/page_title.component.svelte';
-	import type { EventModel } from './+page.server';
+	import type { EventModel } from '$lib/features/events/domain/event_model';
+	import EventBriefs from '$lib/features/events/presentation/components/event_briefs.component.svelte';
+	import EventDeleteModal from '$lib/features/events/presentation/components/event_delete_modal.component.svelte';
 
 	// const { data }: { data: { events: EventModel[] } } = $props();
 

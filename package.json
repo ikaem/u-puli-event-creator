@@ -40,6 +40,7 @@
 		"vite": "^7.0.4"
 	},
 	"dependencies": {
-		"dayjs": "^1.11.13"
+		"dayjs": "^1.11.13",
+		"svelte-sonner": "^1.0.5"
 	}
 }

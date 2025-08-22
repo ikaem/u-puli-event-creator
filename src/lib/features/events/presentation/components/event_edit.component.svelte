@@ -1,45 +1,17 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-
-	// TODO this needs to be moved to domain or utils/values or something
-
-	export type EventEditValue = {
-		title?: string;
-		location?: string;
-		// date: Date;
-		date?: string;
-		time?: string;
-		moreInfoUrl?: string;
-		imageUrl?: string;
-		description?: string;
-	};
+	import type { EditEventModel } from '$lib/features/events/domain/edit_event_model';
 
 	type Props = {
-		editValue: EventEditValue;
+		event?: EditEventModel;
 		submitButtonText: string;
 		submitAction: string;
 		submitMethod: 'dialog' | 'get' | 'post' | 'DIALOG' | 'GET' | 'POST' | null | undefined;
 	};
-	const { editValue, submitButtonText, submitAction, submitMethod }: Props = $props();
-
-	// const dateISOString = editValue?.date.toISOString();
-
-	// const dateSegment = dateISOString?.split('T')[0];
-	// const timeSegment = dateISOString?.split('T')[1].split('.')[0];
-
-	// console.log({
-	// 	date: dateSegment,
-	// 	time: timeSegment,
-	// 	isoString: dateISOString
-	// });
+	const { event, submitButtonText, submitAction, submitMethod }: Props = $props();
 </script>
 
 <div class="bg-green-100 p-2">
-	<!-- use:enhance={() => {
-			return async ({ update }) => {
-				await update();
-			};
-		}} -->
 	<form
 		action={submitAction}
 		method={submitMethod}
@@ -59,18 +31,16 @@
 				class="border-0 outline-none focus:ring-0 focus:outline-none"
 				type="text"
 				name="title"
-				value={editValue?.title}
+				value={event?.title}
 			/>
-			<!-- value={editValue?.title} -->
 		</label>
 		<label class="flex flex-col gap-1">
 			<span class="text-sm">Lokacija</span>
-			<!-- TODO maybe form.location should be used? -->
 			<input
 				class="border-0 outline-none focus:ring-0 focus:outline-none"
 				type="text"
 				name="location"
-				value={editValue?.location}
+				value={event?.location}
 			/>
 		</label>
 
@@ -81,7 +51,7 @@
 					class="border-0 outline-none focus:ring-0 focus:outline-none"
 					type="date"
 					name="date"
-					value={editValue?.date}
+					value={event?.date}
 				/>
 			</label>
 			<label class="flex flex-1 flex-col gap-1">
@@ -90,7 +60,7 @@
 					class="border-0 outline-none focus:ring-0 focus:outline-none"
 					type="time"
 					name="time"
-					value={editValue?.time}
+					value={event?.time}
 				/>
 			</label>
 		</div>
@@ -103,7 +73,7 @@
 				class="border-0 outline-none focus:ring-0 focus:outline-none"
 				type="text"
 				name="moreInfoUrl"
-				value={editValue?.moreInfoUrl}
+				value={event?.url}
 			/>
 		</label>
 
@@ -114,13 +84,13 @@
 					class="border-0 outline-none focus:ring-0 focus:outline-none"
 					type="text"
 					name="imageUrl"
-					value={editValue?.imageUrl}
+					value={event?.imageUrl}
 				/>
 			</label>
 			<div class="h-30 w-full bg-amber-100">
 				<img
 					class="h-full w-full object-contain object-center"
-					src={editValue?.imageUrl}
+					src={event?.imageUrl}
 					alt="Slika događaja"
 				/>
 			</div>
@@ -133,7 +103,7 @@
 				name="description"
 				id=""
 				class="border-0 outline-none focus:ring-0 focus:outline-none"
-				value={editValue?.description}
+				value={event?.description}
 				rows="5"
 			></textarea>
 		</label>

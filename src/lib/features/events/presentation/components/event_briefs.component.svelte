@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { on } from 'svelte/events';
-	import type { EventModel } from '../../routes/+page.server';
 	import EventBrief from './event_brief.component.svelte';
+	import type { EventModel } from '../../domain/event_model';
 
 	type Props = {
 		events: EventModel[];
