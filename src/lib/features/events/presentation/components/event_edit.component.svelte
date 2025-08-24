@@ -9,6 +9,8 @@
 		submitMethod: 'dialog' | 'get' | 'post' | 'DIALOG' | 'GET' | 'POST' | null | undefined;
 	};
 	const { event, submitButtonText, submitAction, submitMethod }: Props = $props();
+
+	let imageUrl = $state(event?.imageUrl);
 </script>
 
 <div class="bg-green-100 p-2">
@@ -46,7 +48,7 @@
 
 		<div class="flex gap-2">
 			<label class="flex flex-1 flex-col gap-1">
-				<span class="text-sm">Lokacija</span>
+				<span class="text-sm">Datum</span>
 				<input
 					class="border-0 outline-none focus:ring-0 focus:outline-none"
 					type="date"
@@ -55,7 +57,7 @@
 				/>
 			</label>
 			<label class="flex flex-1 flex-col gap-1">
-				<span class="text-sm">Lokacija</span>
+				<span class="text-sm">Vrijeme</span>
 				<input
 					class="border-0 outline-none focus:ring-0 focus:outline-none"
 					type="time"
@@ -84,15 +86,17 @@
 					class="border-0 outline-none focus:ring-0 focus:outline-none"
 					type="text"
 					name="imageUrl"
-					value={event?.imageUrl}
+					bind:value={imageUrl}
 				/>
 			</label>
 			<div class="h-30 w-full bg-amber-100">
-				<img
-					class="h-full w-full object-contain object-center"
-					src={event?.imageUrl}
-					alt="Slika događaja"
-				/>
+				{#if imageUrl}
+					<img
+						class="h-full w-full object-contain object-center"
+						src={imageUrl}
+						alt="Slika događaja"
+					/>
+				{/if}
 			</div>
 		</div>
 

@@ -1,11 +1,12 @@
 import type { PageServerLoad } from './$types';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { EventConverters } from '$lib/features/events/utils/converters/event_converters';
+import { EnvVarWrapper } from '$lib/utils/wrappers/env_var_wrapper';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const id = params.id.replace('$', '');
 
-	const response = await fetch('https://u-puli-api.onrender.com/events/' + id);
+	const response = await fetch(EnvVarWrapper.apiUrl + '/events/' + id);
 	const data = await response.json();
 
 	const ok = data.ok;
@@ -73,7 +74,32 @@ export const actions: Actions = {
 			});
 		}
 
-		await new Promise((resolve) => setTimeout(resolve, 1000));
+		// await new Promise((resolve) => setTimeout(resolve, 1000));
+
+		const assembledDateNative = new Date(`${date}T${time}`);
+
+		console.log('Assembled date (native):', assembledDateNative.toString());
+
+		const response = await fetch(EnvVarWrapper.apiUrl + '/events/' + idParam, {
+			method: 'PUT',
+			body: JSON.stringify({
+				title,
+				location,
+				date: assembledDateNative.getTime(),
+				url: moreInfoUrl,
+				imageUrl: imageUrl,
+				description
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+
+		const responseData = await response.json();
+
+		console.log('Edit event response:', responseData);
+
+		// TODO should try catch this
 
 		redirect(303, '/event/' + idParam);
 		// return {

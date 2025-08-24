@@ -1,10 +1,11 @@
 import { EventConverters } from '$lib/features/events/utils/converters/event_converters';
+import { EnvVarWrapper } from '$lib/utils/wrappers/env_var_wrapper';
 import type { PageServerLoad } from './edit/$types';
 
 export const load: PageServerLoad = async ({ params }) => {
 	// we will create a function somewhwere in data source that will redirect this
 	const id = params.id.replace('$', '');
-	const response = await fetch('https://u-puli-api.onrender.com/events/' + id);
+	const response = await fetch(EnvVarWrapper.apiUrl + '/events/' + id);
 	const data = await response.json();
 
 	const ok = data.ok;
